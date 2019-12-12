@@ -1,0 +1,28 @@
+{
+  "name": "apollo-graphql-server-ts",
+  "version": "1.0.0",
+  "description": "sample starter project to boostrap your custom implementation of a apollo graphql server running typescript",
+  "main": "main.ts",
+  "scripts": {
+    "start": "nodemon -r graphql-import-node/register",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "calvin nguyen",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^2.9.13",
+    "apollo-server-express": "^2.9.13",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "graphql": "^14.5.8",
+    "graphql-import-node": "0.0.4",
+    "nodemon": "^2.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.6",
+    "@babel/register": "^7.7.4",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.3"
+  }
+}
