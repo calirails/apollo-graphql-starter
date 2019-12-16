@@ -1,28 +1,54 @@
 // const cors = require('cors')
 import cors from 'cors'
 import express from 'express'
-import { ApolloServer, gql } from 'apollo-server-express'
+import { ApolloServer, gql } from 'apollo-server'
+import { UserIdentity, deriveUserFromToken } from './identity/auth'
 
 // Construct a schema, using GraphQL schema language
 const typeDefs = gql`
   type Query {
-    hello: String
+    hello: String,
+    me: User
+  }
+
+  type User {
+    id: ID!
+    username: String!
   }
 `;
 
 // Provide resolver functions for your schema fields
 const resolvers = {
   Query: {
-    hello: () => 'Hello from Apollo GraphQL Typescript Server!',
+    hello: () => 'Hello from your Apollo GraphQL Typescript Server!',
+    me: (root: any, args: any, context: any) : UserIdentity => {
+      const identity = context.userIdentity
+      console.log({ identity })
+      return context.userIdentity
+    }
   },
+  User: {
+    id: (user: any) => user._id,
+    username: (user: any) => user.name
+  }
 };
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({ 
+  typeDefs,
+  context: async({req}: {req: any }) => {
+    const accessToken = req.headers.authorization
+    const userIdentity = await deriveUserFromToken(accessToken)
+    console.log({userIdentity})
+    return {
+      userIdentity
+    }
+  },
+  resolvers
+});
+// const app = express();
+// app.use(cors())
+// server.applyMiddleware({ app });
 
-const app = express();
-app.use(cors())
-server.applyMiddleware({ app });
-
-app.listen({ port: 4000 }, () =>
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+server.listen().then(({url}: {url: any }) =>
+  console.log(`🚀 Apollo GraphQL server running at ${url}}`)
 );
