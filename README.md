@@ -2,7 +2,8 @@ Apollo GraphQL Starter
 ======================
 
 ## Purpose
-This is a starter project for building a custom GraphQL based API Gateway with authentication and authorization placeholders you can swap out.
+This is a starter project for building a custom GraphQL based API Gateway with authentication and authorization placeholders you can swap out
+with your specific rules for authenticating and authorizing requests.
 
 ## Implementation
 Our GraphQL server is an instance of an Apollo Server setup with Typescript, along with hooks to enable watchers for Typescript auto transpilation of .ts into .js files, as well as tools for code generation of GraphQL TypeDefs within Schema IDL into actual Typescript Types readily used by this server as well as front-end client applications.
